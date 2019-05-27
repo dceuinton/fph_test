@@ -14,6 +14,8 @@ using namespace std;
 
 int main() {
 
+	int chunksize = 3;
+
 	string inputFileName = "flow_test.csv";
 	string outputFileName = "results.csv";
 
@@ -24,23 +26,49 @@ int main() {
 	char c('z');
 	vector<int> xTimes, yTimes, zTimes; 				// Could be worth using arrays as simpler
 	vector<double> xValues, yValues, zValues;
+	int times[chunksize];
+	double values[20];
 
-	while (inputFile >> xt >> c >> x) {
-		xTimes.push_back(xt);
-		xValues.push_back(x);
-	}
-
-	for (int i = 0; i < xTimes.size(); ++i)	{
-		cout << xTimes[i] << ", " << xValues[i] << endl;
-	}
+	int count = 0;
 
 	ofstream outputFile(outputFileName, ios::out | ios::app);
 
-	if (outputFile.is_open()) {
-		for (int i = 0; i < xTimes.size(); ++i) {
-			outputFile << xTimes[i] << "," << xValues[i] << "\n";
+	/*
+	Currently, this loop doesn't have any benefit of using the "chunksize" as it reads
+	and writes straight away. Batching would only be useful if I separate these two out.
+	I'm not sure if that's faster/more efficient/better 
+	*/
+
+	while (!inputFile.eof()) {
+		while (count < chunksize) {
+			if (!inputFile.eof()) {
+				inputFile >> times[count] >> c >> values[count];
+				outputFile << times[count] << c << values[count] << "\n";
+			} else {
+				break;
+			}
+			count++;
 		}
+		count = 0;
 	}
+	
+
+	// while (inputFile >> xt >> c >> x) {
+	// 	xTimes.push_back(xt);
+	// 	xValues.push_back(x);
+	// }
+
+	// for (int i = 0; i < xTimes.size(); ++i)	{
+	// 	cout << xTimes[i] << ", " << xValues[i] << endl;
+	// }
+
+	
+
+	// if (outputFile.is_open()) {
+	// 	for (int i = 0; i < xTimes.size(); ++i) {
+	// 		outputFile << xTimes[i] << "," << xValues[i] << "\n";
+	// 	}
+	// }
 
 	inputFile.close();
 	outputFile.close();
