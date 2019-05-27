@@ -17,3 +17,4 @@ ${BUILD}/%.o: ${SRC}/%.cpp
 clean: 
 	rm ${BUILD}/*.o 
 	rm ${BIN}
+	rm results.csv
