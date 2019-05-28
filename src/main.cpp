@@ -17,9 +17,13 @@ int main() {
 	int chunksize = 3;
 
 	string inputFileName = "flow_test.csv";
+	string secondInputFileName = "pressure_test.csv";
+	string thirdInputFilename = "humidity_test.csv";
 	string outputFileName = "results.csv";
 
 	ifstream inputFile(inputFileName, ifstream::in);
+	ifstream secondInputFile(secondInputFileName, ifstream::in);
+	ifstream thirdInputFile(thirdInputFilename, ifstream::in);
 
 	int xt(-1), yt(-1), zt(-1);
 	double x(-1.0), y(-1), z(-1);
@@ -43,7 +47,11 @@ int main() {
 		while (count < chunksize) {
 			if (!inputFile.eof()) {
 				inputFile >> times[count] >> c >> values[count];
-				outputFile << times[count] << c << values[count] << "\n";
+				secondInputFile >> yt >> c >> y;
+				thirdInputFile >> zt >> c >> z;
+				outputFile << times[count] << c << values[count] << c 
+				<< yt << c << y 
+				<< zt << c << z << "\n";
 			} else {
 				break;
 			}
