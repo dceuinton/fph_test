@@ -12,73 +12,67 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char** argv) {
 
-	int chunksize = 3;
+	string flowFileName = "flow_test.csv";
+	string pressureFileName = "pressure_test.csv";
+	string humidityFileName = "humidity_test.csv";
+	string outputFileName = "blackbox_results.csv";
 
-	string inputFileName = "flow_test.csv";
-	string secondInputFileName = "pressure_test.csv";
-	string thirdInputFilename = "humidity_test.csv";
-	string outputFileName = "results.csv";
+	if (argc == 1) {
+		cout << "Using default settings" << endl;
+	} else if (argc == 4) {
+		flowFileName.assign(argv[1]);
+		pressureFileName.assign(argv[2]);
+		humidityFileName.assign(argv[3]);
+	} else if (argc == 5) {
+		flowFileName.assign(argv[1]);
+		pressureFileName.assign(argv[2]);
+		humidityFileName.assign(argv[3]);
+		outputFileName.assign(argv[4]);
+	} else {
+		cout << "Usage: ./main <flow csv filepath> <pressure csv filepath> <humidity csv filepath> <optional: output csv filename>" << endl;
+		return -1;
+	}
 
-	ifstream inputFile(inputFileName, ifstream::in);
-	ifstream secondInputFile(secondInputFileName, ifstream::in);
-	ifstream thirdInputFile(thirdInputFilename, ifstream::in);
-
-	int xt(-1), yt(-1), zt(-1);
-	double x(-1.0), y(-1), z(-1);
-	char c('z');
-	vector<int> xTimes, yTimes, zTimes; 				// Could be worth using arrays as simpler
-	vector<double> xValues, yValues, zValues;
-	int times[chunksize];
-	double values[20];
-
-	int count = 0;
-
+	ifstream flowFile(flowFileName, ifstream::in);
+	ifstream pressureFile(pressureFileName, ifstream::in);
+	ifstream humidityFile(humidityFileName, ifstream::in);
 	ofstream outputFile(outputFileName, ios::out | ios::app);
 
-	/*
-	Currently, this loop doesn't have any benefit of using the "chunksize" as it reads
-	and writes straight away. Batching would only be useful if I separate these two out.
-	I'm not sure if that's faster/more efficient/better 
-	*/
+	unsigned int flowTime(-1), pressureTime(-1), humidityTime(-1);
+	double flowValue(-1), pressureValue(-1), humidityValue(-1);
+	char c(',');
 
-	while (!inputFile.eof()) {
-		while (count < chunksize) {
-			if (!inputFile.eof()) {
-				inputFile >> times[count] >> c >> values[count];
-				secondInputFile >> yt >> c >> y;
-				thirdInputFile >> zt >> c >> z;
-				outputFile << times[count] << c << values[count] << c 
-				<< yt << c << y 
-				<< zt << c << z << "\n";
-			} else {
-				break;
-			}
-			count++;
+	while (!flowFile.eof() || !pressureFile.eof() || !humidityFile.eof()) {
+		
+		if (!flowFile.eof()) {
+			flowFile >> flowTime >> c >> flowValue;
+			outputFile << flowTime << c << flowValue << c;
+		} else {
+			outputFile << c << c;
 		}
-		count = 0;
+
+		if (!pressureFile.eof()) {
+			pressureFile >> pressureTime >> c >> pressureValue;
+			outputFile << pressureTime << c << pressureValue << c;
+		} else {
+			outputFile << c << c;
+		}
+
+		if (!humidityFile.eof()) {
+			humidityFile >> humidityTime >> c >> humidityValue;
+			outputFile << humidityTime << c << humidityValue;
+		} else {
+			outputFile << c;
+		}
+
+		outputFile << "\n";
 	}
-	
 
-	// while (inputFile >> xt >> c >> x) {
-	// 	xTimes.push_back(xt);
-	// 	xValues.push_back(x);
-	// }
-
-	// for (int i = 0; i < xTimes.size(); ++i)	{
-	// 	cout << xTimes[i] << ", " << xValues[i] << endl;
-	// }
-
-	
-
-	// if (outputFile.is_open()) {
-	// 	for (int i = 0; i < xTimes.size(); ++i) {
-	// 		outputFile << xTimes[i] << "," << xValues[i] << "\n";
-	// 	}
-	// }
-
-	inputFile.close();
+	flowFile.close();
+	pressureFile.close();
+	humidityFile.close();
 	outputFile.close();
 
 	return 0;
