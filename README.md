@@ -18,7 +18,7 @@ The first three are my default settings so if you run `./main` with no arguments
 I chose to build a simple solution to this problem. The program takes in three csv files and outputs one csv file. This seemed like a simple way to solve the problem as it satisfies the requirements of being able to "record all the inputs in an efficient manner that can later be inspected and played back". CSVs are ideal for this purpose because common programs like but excel and calc make it easy for anyone to review data, run calculations, and graph data. 
 
 ### Assumptions about input CSV files
-I assume that each sensor outputs an unsingned int as a time value and then a double that is its measurement at that time. So each line in the sensor file may look like `1558857157,69.25` for example. 
+I assume that each sensor outputs an unsigned int as a time value and then a double that is its measurement at that time. So each line in the sensor file may look like `1558857157,69.25` for example. 
 
 ### Design
 Initially, I followed a procedural approach to the problem, where I went through and solved it. The reason for this was that the problem is simple enough that writing classes actually increases code length. However, in the end I rewrote it with a **SensorFile** class because I was doing the same operations on each of the three input CSVs over a couple of times over, and that's a good point to put those things into a class. 
