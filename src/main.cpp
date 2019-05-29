@@ -1,18 +1,14 @@
-
-/** TODO: 
-	- Get input from 3 different files
-	- Handle input in chunks
-	- Connect input to output file
-*/
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
+#include "timer.h"
 
 using namespace std;
 
 int main(int argc, char** argv) {
+
+	Timer stopwatch;
 
 	string flowFileName = "flow_test.csv";
 	string pressureFileName = "pressure_test.csv";
@@ -44,6 +40,8 @@ int main(int argc, char** argv) {
 	double flowValue(-1), pressureValue(-1), humidityValue(-1);
 	char c(',');
 
+	stopwatch.start();
+
 	while (!flowFile.eof() || !pressureFile.eof() || !humidityFile.eof()) {
 		
 		if (!flowFile.eof()) {
@@ -69,6 +67,10 @@ int main(int argc, char** argv) {
 
 		outputFile << "\n";
 	}
+
+	stopwatch.stop();
+
+	cout << "Time taken in milliseconds for reading and writing was: " << stopwatch.milliseconds() << endl;
 
 	flowFile.close();
 	pressureFile.close();
