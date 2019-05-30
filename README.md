@@ -2,7 +2,7 @@
 
 ## How to build and run the project
 
-I have used GNU Make to build the project. Simply type `make` when in the folder to build the executable, and then run `./main <flow.csv> <pressure.csv> <humdity.csv>`
+I have used GNU Make to build the project. Once that is set up. Simply type `make` when in the folder to build the executable, and then run `./main <flow.csv> <pressure.csv> <humdity.csv>` or use `main.exe` depending on which system you're on. I have tested this on Windows 10 and on Ubuntu 18. 
 
 I have included my own CSV files that I tested the program on. 
 
