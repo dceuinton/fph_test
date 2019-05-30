@@ -1,7 +1,7 @@
 CC = g++
 BIN = main
 BUILD = ./src/obj
-OBJS = ${BUILD}/${BIN}.o ${BUILD}/timer.o
+OBJS = ${BUILD}/${BIN}.o ${BUILD}/timer.o ${BUILD}/SensorFile.o
 SRC = ./src
 CFLAGS = -std=c++11
 INC = -I/usr/include -I./include

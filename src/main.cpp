@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "timer.h"
+#include "SensorFile.h"
 
 using namespace std;
 
