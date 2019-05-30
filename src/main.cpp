@@ -1,3 +1,14 @@
+/*
+Author:  Dale Euinton
+Purpose: The goal of this program is to take 3 CSV files from 3 different sensors
+		 and combine them into 1 CSV with all the data. Each file will have a time
+		 measurement and a sensor value to add to the CSV and each sensor is given
+		 its own columns in which to store the values.
+
+Note:	 SensorFile handles the reading and writing of values of a input file. 
+		 Timer handles some basic clock functions for measuring the program.
+*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -11,6 +22,7 @@ int main(int argc, char** argv) {
 
 	Timer stopwatch;
 
+	// Initial values to test with
 	string flowFileName = "flow_test.csv";
 	string pressureFileName = "pressure_test.csv";
 	string humidityFileName = "humidity_test.csv";

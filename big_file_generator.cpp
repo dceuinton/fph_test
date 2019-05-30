@@ -1,3 +1,10 @@
+/*
+Author:  Dale Euinton
+Purpose: The goal of this program is to write large CSV files to test the blackbox function. 
+Usage:   Can be built with - make generate
+		 Run with - ./generate <newfilename.csv> <number of entries>
+*/
+
 #include <iostream>
 #include <string>
 #include <fstream>

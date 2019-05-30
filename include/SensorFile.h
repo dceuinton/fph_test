@@ -1,3 +1,9 @@
+/*
+Author:  Dale Euinton
+Purpose: Handling reading and writing of sensor CSV files with a simple <uint,double> format
+		 Reading and writing is done line by line. 
+*/
+
 #include <iostream>
 #include <string>
 #include <fstream>
