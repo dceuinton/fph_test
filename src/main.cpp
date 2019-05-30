@@ -32,13 +32,11 @@ int main(int argc, char** argv) {
 		return -1;
 	}
 
-	ifstream flowFile(flowFileName, ifstream::in);
-	ifstream pressureFile(pressureFileName, ifstream::in);
-	ifstream humidityFile(humidityFileName, ifstream::in);
+	SensorFile flowFile(flowFileName);
+	SensorFile pressureFile(pressureFileName);
+	SensorFile humidityFile(humidityFileName);
 	ofstream outputFile(outputFileName, ios::out | ios::app);
 
-	unsigned int flowTime(-1), pressureTime(-1), humidityTime(-1);
-	double flowValue(-1), pressureValue(-1), humidityValue(-1);
 	char c(',');
 
 	stopwatch.start();
@@ -46,26 +44,25 @@ int main(int argc, char** argv) {
 	while (!flowFile.eof() || !pressureFile.eof() || !humidityFile.eof()) {
 		
 		if (!flowFile.eof()) {
-			flowFile >> flowTime >> c >> flowValue;
-			outputFile << flowTime << c << flowValue << c;
+			flowFile.readLine();
+			flowFile.writeLine(outputFile);
 		} else {
 			outputFile << c << c;
 		}
 
 		if (!pressureFile.eof()) {
-			pressureFile >> pressureTime >> c >> pressureValue;
-			outputFile << pressureTime << c << pressureValue << c;
+			pressureFile.readLine();
+			pressureFile.writeLine(outputFile);
 		} else {
 			outputFile << c << c;
 		}
 
 		if (!humidityFile.eof()) {
-			humidityFile >> humidityTime >> c >> humidityValue;
-			outputFile << humidityTime << c << humidityValue;
+			humidityFile.readLine();
+			humidityFile.writeLine(outputFile);
 		} else {
 			outputFile << c;
 		}
-
 		outputFile << "\n";
 	}
 

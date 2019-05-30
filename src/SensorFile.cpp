@@ -18,7 +18,7 @@ void SensorFile::readLine() {
 }
 
 void SensorFile::writeLine(ofstream &outputFile) {
-	outputFile << mTime << mC << mValue;
+	outputFile << mTime << mC << mValue << mC;
 }
 
 void SensorFile::close() {
